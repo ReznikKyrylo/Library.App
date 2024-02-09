@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>Search Book</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+        <a href="/" class="brand-logo center">Library</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <form th:method="POST" th:action="@{/books/search}">
+        <div class="row" style="display: flex; justify-content: center;">
+
+            <h4 class="col s-6" >Enter the first letters :</h4>
+            <div class="input-field inline col s-6">
+                <input name="query" id="inline" type="text" class="validate">
+            </div>
+        </div>
+
+    </form>
+
+    <div style="display: flex; justify-content: center;" th:if="${books}" >
+        <div th:if="${books.isEmpty()}">
+            <h4>No books found</h4>
+        </div>
+    </div>
+
+    <div th:unless="${books.isEmpty()}">
+        <table class="highlight centered">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Owner</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="cursor: pointer" th:each="book : ${books}" th:href="@{|/books/${book.id}|}"
+                onclick="window.location.href = this.getAttribute('href');">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.year}"></td>
+                <td th:text="((*{book.getOwner}==null) ? 'This book is available' : ${book.getOwner().getFullName()})"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+<!--    <div th:each="book ,row: ${books}">-->
+<!--        <h5 th:text="${row.index+1}+'. '+${book.getTitle()+', '+book.getAuthor()+', '+book.getYear()}"></h5>-->
+<!--        <div th:if="${book.getOwner() !=null}">-->
+<!--            <h6 th:text="${book.getOwner().getFullName()} + ' has the book now'"></h6>-->
+<!--        </div>-->
+
+<!--        <div th:if="${book.getOwner() ==null}">-->
+<!--            <h6>This book is available</h6>-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

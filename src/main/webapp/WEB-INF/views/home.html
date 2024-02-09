@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+        <a href="/" class="brand-logo center">Library</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div style="display: flex;justify-content: space-evenly; margin-top: 40px">
+        <div style="border-radius: 15px" class="purple darken-3">
+            <a style="display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white" th:href="@{/people}">
+                <i class="material-icons large">person</i>
+                <p>People</p>
+            </a>
+        </div>
+        <div style="border-radius: 15px" class="deep-orange lighten-1">
+            <a style="display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white"
+               th:href="@{/books}">
+                <i class="material-icons large">book</i>
+                <p>Books</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

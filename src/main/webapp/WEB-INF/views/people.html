@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>All People</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+        <a href="/" class="brand-logo center">Library</a>
+    </div>
+</nav>
+<div class="container">
+    <br>
+    <a class="waves-effect waves-light btn deep-orange lighten-1" href="/people/new">Add Person <i
+            class="material-icons">person_add</i></a>
+
+    <!-- Dropdown Trigger -->
+    <a class="dropdown-trigger btn waves-effect waves-light btn deep-orange lighten-1"
+       data-target='sort'>Sort
+        <i class="material-icons">sort</i></a>
+    <!-- Dropdown Structure -->
+    <ul id='sort' class='dropdown-content'>
+        <li><a th:href="@{/people(sort_by_name=true,page=${currentPage})}">Name</a></li>
+        <li><a th:href="@{/people(sort_by_name=false,page=${currentPage})}">Default</a></li>
+    </ul>
+
+    <a class="waves-effect waves-light btn deep-orange lighten-1 " href="/people/search">Search<i
+            class="material-icons">search</i></a>
+
+    <ul class="pagination right-align">
+        <li class="waves-effect"
+            th:switch="${sort}"
+            th:class="${currentPage == 0} ? 'disabled'">
+
+            <a th:case="true"
+               th:style="${currentPage == 0} ? 'pointer-events: none;'"
+               th:href="@{/people(sort_by_name=true,page=${currentPage}-1)}">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <a th:case="false"
+               th:style="${currentPage == 0} ? 'pointer-events: none;'"
+               th:href="@{/people(page=${currentPage}-1)}">
+                <i class="material-icons">chevron_left</i>
+            </a>
+        </li>
+
+        <li class="waves-effect"
+            th:switch="${sort}"
+            th:class="${currentPage == totalPage} ? 'disabled'">
+
+            <a th:case="true"
+               th:style="${currentPage == totalPage} ? 'pointer-events: none;'"
+               th:href="@{/people(sort_by_name=true,page=${currentPage}+1)}">
+                <i class="material-icons">chevron_right</i>
+            </a>
+            <a th:case="false"
+               th:style="${currentPage == totalPage} ? 'pointer-events: none;'"
+               th:href="@{/people(page=${currentPage}+1)}">
+                <i class="material-icons">chevron_right</i>
+            </a>
+        </li>
+    </ul>
+
+    <br/>
+    <table class="highlight">
+        <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <tr style="cursor: pointer" th:each="person : ${people}" th:href="@{|/people/${person.id}|}"
+            onclick="window.location.href = this.getAttribute('href');">
+            <td th:text="${person.getFullName()}"></td>
+            <td th:text="${person.getYearOfBirth()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var options = document.querySelectorAll('.dropdown-content');
+        var instances = M.Dropdown.init(elems, options);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>Search People</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+        <a href="/" class="brand-logo center">Library</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <form th:method="POST" th:action="@{/people/search}">
+        <div class="row" style="display: flex; justify-content: center;">
+
+            <h4 class="col s-6" >Enter the first letters :</h4>
+            <div class="input-field inline col s-6">
+                <input name="query" id="inline" type="text" class="validate">
+            </div>
+        </div>
+
+    </form>
+
+    <div style="display: flex; justify-content: center;" th:if="${people}" >
+        <div th:if="${people.isEmpty()}">
+            <h4>No people found</h4>
+        </div>
+    </div>
+
+    <div th:unless="${people.isEmpty()}">
+        <table class="highlight centered">
+            <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Year</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="cursor: pointer" th:each="person : ${people}" th:href="@{|/people/${person.id}|}"
+                onclick="window.location.href = this.getAttribute('href');">
+                <td th:text="${person.fullName}"></td>
+                <td th:text="${person.yearOfBirth}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

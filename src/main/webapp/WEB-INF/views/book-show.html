@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Show Book</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+        <a href="/" class="brand-logo center">Library</a>
+    </div>
+</nav>
+<div class="container">
+    <h3 th:text="'Title : '+${book.getTitle()}"></h3>
+    <h3 th:text="'Author : '+${book.getAuthor()}"></h3>
+    <h3 th:text="'Year : '+${book.getYear()}"></h3>
+    <hr style="color: #00e5ff;">
+    <div style="margin-bottom: 20px" th:if="${owner}">
+        <h4 th:text="${owner.getFullName()}+' has the book now'"></h4>
+        <a class="waves-effect waves-light btn teal accent-4" th:href="@{|/books/${book.id}/release|}">
+            Release book
+        </a>
+        <br>
+    </div>
+
+    <div th:unless="${owner}">
+        <h4>This book is available.</h4>
+        <div class="row">
+            <form th:method="POST" th:action="@{|/books/${book.id}/assign|}" th:object="${person}" style="display:inline-block;">
+                <label style="font-size:1.6rem">Choose a person</label>
+                <div style="display: flex;align-items: center;">
+                    <select style="width: auto" th:field="*{id}" class="browser-default">
+                        <option th:each="person : ${people}"
+                                th:text="${person.getFullName()}"
+                                th:value="${person.id}">
+                        </option>
+                    </select>
+
+                    <button style="height: 42px" class="btn waves-effect waves-light light-green darken-1" type="submit" name="action">
+                        Assign the book
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <a class="waves-effect waves-light btn deep-orange lighten-1" th:href="@{|/books/${book.id}/edit|}"
+       th:text="Update">Update</a>
+    <a class="waves-effect waves-light btn purple darken-3" th:href="@{|/books/${book.id}/delete|}"
+       th:text="Delete">Delete</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Create Book</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper deep-orange lighten-1">
+        <a href="/" class="brand-logo center">Library</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <br>
+        <form class="col s12" th:method="POST" th:action="@{/books/new}" th:object="${book}">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" th:field="*{title}" id="title"/>
+                    <label for="title">Title</label>
+                    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title
+                        Error
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" th:field="*{author}" id="author"/>
+                    <label for="author">Author</label>
+                    <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">
+                        Author Error
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" th:field="*{year}" id="year"/>
+                    <label for="year">Year</label>
+                    <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">
+                        Year Error
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <button class="btn waves-effect waves-light deep-orange lighten-1" type="submit" name="action">Create
+            </button>
+        </form>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
